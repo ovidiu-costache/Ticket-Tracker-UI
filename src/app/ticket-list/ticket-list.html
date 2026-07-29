@@ -1,11 +1,34 @@
-<button (click)="curataLista()">Sterge tichetele</button>
-<button (click)="populeazaLista()">Adauga tichetele</button>
+<p>Cauta un tichet:</p>
+<input type="text" [(ngModel)]="searchText">
 
-@if (tichete.length == 0) {
+<br><br>
+
+<h3>Adauga un nou ticket custom:</h3>
+
+<p>Titlu tichet nou:</p>
+<input type="text" [(ngModel)]="titlu">
+
+<p>Prioritatea:</p>
+<select [(ngModel)]="prioritate">
+    <option value="1">LOW</option>
+    <option value="2">MEDIUM</option>
+    <option value="3">HIGH</option>
+</select>
+
+<button (click)="adaugaTichet()">Adauga</button>
+
+<br><br>
+
+<button (click)="curataLista()">Sterge tichetele</button>
+<button (click)="populeazaLista()">Populeaza lista de tichete mock</button>
+
+<br><br>
+
+@if (ticheteFiltrate.length == 0) {
     <p>Lista de tichete este vida!</p>
 }
 
 <!--Daca nu exista tichete, stie singur sa nu incerce bucla for-->
-@for (ticket of tichete; track ticket.id) {
+@for (ticket of ticheteFiltrate; track ticket.id) {
     <app-ticket-card></app-ticket-card>
 }
