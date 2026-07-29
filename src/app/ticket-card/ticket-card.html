@@ -1,8 +1,11 @@
 <div>
-    <p>Cheia Ticket-ului: {{ ticketKey }}</p>
+    <p>Cheia Ticket-ului: {{ ticket.ticketKey }}</p>
 
     <!--Am legat atributul HTML [title] de description-->
-    <h2 [title]="description">Titlu: {{ title }}</h2>
+    <h2 [title]="ticket.description">Titlu: {{ ticket.title }}</h2>
 
-    <p>Descriere: {{ description }}</p>
+    <p>Descriere: {{ ticket.description }}</p>
+
+    <!--Butonul care declanseaza metoda de output-->
+    <button (click)="stergereTicket()">Sterge acest tichet</button>
 </div>

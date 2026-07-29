@@ -62,4 +62,8 @@ export class TicketList {
       { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
     ];
   }
+
+  stergeTichetDinLista(id: number) {
+    this.tichete = this.tichete.filter(t => t.id !== id);
+  }
 }

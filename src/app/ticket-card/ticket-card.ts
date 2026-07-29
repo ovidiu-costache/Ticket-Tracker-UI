@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ticket-card',
@@ -7,11 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './ticket-card.css',
 })
 export class TicketCard {
-  id = 12;
-  ticketKey = 'TK-112';
-  title = 'Metrorex';
-  description = 'Card urgent';
-  createdAt = new Date();
-  statusId = 1;
-  priorityId = 3;
+  @Input() ticket: any;
+  @Output() deleteTicket = new EventEmitter<number>(); // ID numar
+
+  stergereTicket() {
+    this.deleteTicket.emit(this.ticket.id);
+  }
 }
