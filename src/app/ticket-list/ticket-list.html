@@ -1,11 +1,11 @@
-<button (click)="curataLista()">Sterge tichetele</button>
-<button (click)="populeazaLista()">Adauga tichetele</button>
+<button (click)="clearList()">Sterge tichetele</button>
+<button (click)="populateList()">Adauga tichetele</button>
 
-@if (tichete.length == 0) {
+@if (tickets.length == 0) {
     <p>Lista de tichete este vida!</p>
 }
 
 <!--Daca nu exista tichete, stie singur sa nu incerce bucla for-->
-@for (ticket of tichete; track ticket.id) {
+@for (ticket of tickets; track ticket.id) {
     <app-ticket-card></app-ticket-card>
 }
