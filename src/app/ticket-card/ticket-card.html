@@ -1,10 +1,16 @@
 <div>
-    <p>Cheia Ticket-ului: {{ ticket.ticketKey }}</p>
-
     <!--Am legat atributul HTML [title] de description-->
-    <h2 [title]="ticket.description">Titlu: {{ ticket.title }}</h2>
+    <h3 [title]="ticket.description">Titlu: {{ ticket.title | titlecase }}</h3>
 
     <p>Descriere: {{ ticket.description }}</p>
+
+    <p>Creat: {{ ticket.createdAt | date:'medium' }}</p>
+
+    <p>Cheie: {{ ticket.ticketKey }}</p>
+
+    <p>Status: {{ ticket.statusId | statusLabel }}</p>
+
+    <p>Prioritate: {{ ticket.priorityId | priorityLabel:true }}</p>
 
     <!--Butonul care declanseaza metoda de output-->
     <button (click)="removeTicket()">Sterge acest tichet</button>
