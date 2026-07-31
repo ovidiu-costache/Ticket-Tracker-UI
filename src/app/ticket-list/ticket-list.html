@@ -6,33 +6,33 @@
 <h3>Adauga un nou ticket custom:</h3>
 
 <p>Titlu tichet nou:</p>
-<input type="text" [(ngModel)]="titlu">
+<input type="text" [(ngModel)]="title">
 
 <p>Prioritatea:</p>
-<select [(ngModel)]="prioritate">
+<select [(ngModel)]="priority">
     <option value="1">LOW</option>
     <option value="2">MEDIUM</option>
     <option value="3">HIGH</option>
 </select>
 
-<button (click)="adaugaTichet()">Adauga</button>
+<button (click)="addTicket()">Adauga</button>
 
 <br><br>
 
-<button (click)="curataLista()">Sterge tichetele</button>
-<button (click)="populeazaLista()">Populeaza lista de tichete mock</button>
+<button (click)="clearList()">Sterge tichetele</button>
+<button (click)="populateList()">Populeaza lista de tichete mock</button>
 
 <br><br>
 
-@if (ticheteFiltrate.length == 0) {
+@if (filteredTickets.length == 0) {
     <p>Lista de tichete este vida!</p>
 }
 
 <!--Daca nu exista tichete, stie singur sa nu incerce bucla for-->
-@for (ticket of ticheteFiltrate; track ticket.id) {
+@for (ticket of filteredTickets; track ticket.id) {
     <!--Ce este in stanga este din TicketCard, ce e in dreapta sunt datele curente din TicketList-->
     <app-ticket-card
         [ticket]="ticket";
-        (deleteTicket)="stergeTichetDinLista($event)";>
+        (deleteTicket)="removeTicketFromList($event)";>
     </app-ticket-card>
 }

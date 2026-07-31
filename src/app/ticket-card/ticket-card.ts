@@ -6,11 +6,11 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
   templateUrl: './ticket-card.html',
   styleUrl: './ticket-card.css',
 })
-export class TicketCard {
+export class TicketCardComponent {
   @Input() ticket: any;
   @Output() deleteTicket = new EventEmitter<number>(); // ID numar
 
-  stergereTicket() {
+  removeTicket() {
     this.deleteTicket.emit(this.ticket.id);
   }
 }
