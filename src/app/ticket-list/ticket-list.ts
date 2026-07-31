@@ -9,7 +9,7 @@ import { TicketCard } from "../ticket-card/ticket-card";
   styleUrl: './ticket-list.css',
 })
 export class TicketList {
-  tichete = [
+  tickets = [
     { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
     { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
     { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
@@ -19,41 +19,41 @@ export class TicketList {
   ];
 
   searchText = '';
-  titlu = '';
-  prioritate = 1;
+  title = '';
+  priority = 1;
 
-  get ticheteFiltrate() {
+  get filteredTickets() {
     if (this.searchText == '') {
-      return this.tichete;
+      return this.tickets;
     }
 
-    return this.tichete.filter(t => t.title.toLowerCase().includes(this.searchText.toLowerCase()));
+    return this.tickets.filter(ticket => ticket.title.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
-  adaugaTichet() {
-    const nou = {
-      id: this.tichete.length + 1,
-      ticketKey: 'TK-' + (this.tichete.length + 201),
-      title: this.titlu,
+  addTicket() {
+    const newTicket = {
+      id: this.tickets.length + 1,
+      ticketKey: 'TK-' + (this.tickets.length + 201),
+      title: this.title,
       description: '',
       createdAt: new Date(),
       statusId: 1,
-      priorityId: Number(this.prioritate)
+      priorityId: Number(this.priority)
     };
 
-    this.tichete.push(nou);
+    this.tickets.push(newTicket);
 
-    this.titlu = '';
-    this.prioritate = 1;
+    this.title = '';
+    this.priority = 1;
   }
 
-  curataLista() {
-    this.tichete = [];
+  clearList() {
+    this.tickets = [];
   }
 
   // Redundant, pentru testare
-  populeazaLista() {
-    this.tichete = [
+  populateList() {
+    this.tickets = [
       { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
       { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
       { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
