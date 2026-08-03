@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TicketCardComponent } from "../ticket-card/ticket-card";
+import { TicketService } from '../ticket.service';
 
 @Component({
   selector: 'app-ticket-list',
@@ -8,25 +9,28 @@ import { TicketCardComponent } from "../ticket-card/ticket-card";
   templateUrl: './ticket-list.html',
   styleUrl: './ticket-list.css',
 })
-export class TicketList {
-  tickets = [
-    { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
-    { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
-    { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
-    { id: 4, ticketKey: 'TK-104', title: 'Interfata', description: 'Culoare gresita', createdAt: new Date(), statusId: 3, priorityId: 1 },
-    { id: 5, ticketKey: 'TK-105', title: 'Pagina 404', description: 'Primesc eroare la accesarea profilului', createdAt: new Date(), statusId: 4, priorityId: 2 },
-    { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
-  ];
-
+export class TicketList implements OnInit {
+  tickets: any[] = [];
   searchText = '';
   title = '';
   priority = 1;
+
+  constructor(private ticketService: TicketService) {}
+
+  ngOnInit() {
+    this.loadTickets();
+  }
+
+  loadTickets() {
+    this.ticketService.getTickets().subscribe((data) => {
+      this.tickets = data;
+    });
+  }
 
   get filteredTickets() {
     if (this.searchText == '') {
       return this.tickets;
     }
-
     return this.tickets.filter(ticket => ticket.title.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
@@ -41,7 +45,8 @@ export class TicketList {
       priorityId: Number(this.priority)
     };
 
-    this.tickets.push(newTicket);
+    this.ticketService.addTicket(newTicket);
+    this.loadTickets();
 
     this.title = '';
     this.priority = 1;
@@ -53,17 +58,11 @@ export class TicketList {
 
   // Redundant, pentru testare
   populateList() {
-    this.tickets = [
-      { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
-      { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
-      { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
-      { id: 4, ticketKey: 'TK-104', title: 'Interfata', description: 'Culoare gresita', createdAt: new Date(), statusId: 3, priorityId: 1 },
-      { id: 5, ticketKey: 'TK-105', title: 'Pagina 404', description: 'Primesc eroare la accesarea profilului', createdAt: new Date(), statusId: 4, priorityId: 2 },
-      { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
-    ];
+    this.loadTickets();
   }
 
   removeTicketFromList(id: number) {
-    this.tickets = this.tickets.filter(ticket => ticket.id !== id);
+    this.ticketService.deleteTicket(id);
+    this.loadTickets();
   }
 }
