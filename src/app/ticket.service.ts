@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,15 @@ export class TicketService {
 
   deleteTicket(id: number) {
     this.tickets = this.tickets.filter(t => t.id !== id);
+  }
+
+  getAuditForTicket(ticketKey: string): Observable<any[]> {
+    const mockAudit = [
+      { date: new Date('2026-07-21T11:03:21'), oldStatus: 1, newStatus: 1, comment: 'Modificare titlu' },
+      { date: new Date('2026-07-26T09:00:01'), oldStatus: 1, newStatus: 2, comment: 'Trecere in progres' },
+      { date: new Date('2026-08-01T13:11:20'), oldStatus: 2, newStatus: 3, comment: 'Finalizat' }
+    ];
+
+    return of(mockAudit).pipe(delay(500));
   }
 }
