@@ -1,0 +1,12 @@
+<p>Dashboard - Filtreaza dupa status:</p>
+
+<button (click)="setFilter(1)">TO DO ({{ counts.todo }})</button>
+<button (click)="setFilter(2)">IN PROGRESS ({{ counts.inProgress }})</button>
+<button (click)="setFilter(3)">IN REVIEW ({{ counts.inReview }})</button>
+<button (click)="setFilter(4)">DONE ({{ counts.done }})</button>
+
+<br><br>
+
+<button (click)="setFilter(null)">Arata Toate (Reset)</button>
+
+<br><br>

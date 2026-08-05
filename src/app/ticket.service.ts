@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 @Injectable({
@@ -14,6 +14,12 @@ export class TicketService {
     { id: 5, ticketKey: 'TK-105', title: 'Pagina 404', description: 'Primesc eroare la accesarea profilului', createdAt: new Date(), statusId: 4, priorityId: 2 },
     { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
   ];
+
+  // Daca e null nu are niciun filtru
+  private currentFilterSubject = new BehaviorSubject<number | null>(null);
+
+  // Observable public la care sa se poata abona oricine
+  public currentFilter$ = this.currentFilterSubject.asObservable();
 
   constructor() {}
 
@@ -42,5 +48,22 @@ export class TicketService {
     ];
 
     return of(mockAudit).pipe(delay(500));
+  }
+
+  updateFilter(statusId: number | null) {
+    this.currentFilterSubject.next(statusId);
+  }
+
+  // Cate tichete sunt in fiecare status
+  getTicketCount(): Observable<any> {
+    const counts = {
+      todo: this.tickets.filter(t => t.statusId === 1).length,
+      inProgress: this.tickets.filter(t => t.statusId === 2).length,
+      inReview: this.tickets.filter(t => t.statusId === 3).length,
+      done: this.tickets.filter(t => t.statusId == 4).length,
+      total: this.tickets.length
+    };
+
+    return of(counts);
   }
 }

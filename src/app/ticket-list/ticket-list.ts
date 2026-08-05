@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TicketCardComponent } from "../ticket-card/ticket-card";
 import { TicketService } from '../ticket.service';
+import { Subscription } from 'rxjs';
+import { TicketDashboard } from '../ticket-dashboard/ticket-dashboard';
 
 @Component({
   selector: 'app-ticket-list',
-  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule],
+  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule, TicketDashboard],
   templateUrl: './ticket-list.html',
   styleUrl: './ticket-list.css',
 })
@@ -28,10 +30,23 @@ export class TicketList implements OnInit {
     ])
   });
 
+  currentStatusFilter: number | null = null;
+  filterSub!: Subscription;
+
   constructor(private ticketService: TicketService) {}
 
   ngOnInit() {
     this.loadTickets();
+
+    this.filterSub = this.ticketService.currentFilter$.subscribe(filterValue => {
+      this.currentStatusFilter = filterValue;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.filterSub) {
+      this.filterSub.unsubscribe();
+    }
   }
 
   loadTickets() {
@@ -41,10 +56,17 @@ export class TicketList implements OnInit {
   }
 
   get filteredTickets() {
-    if (this.searchText == '') {
-      return this.tickets;
+    let result = this.tickets;
+
+    if (this.currentStatusFilter !== null) {
+      result = result.filter(t => t.statusId === this.currentStatusFilter);
     }
-    return this.tickets.filter(ticket => ticket.title.toLowerCase().includes(this.searchText.toLowerCase()));
+
+    if (this.searchText == '') {
+      return result;
+    }
+  
+    return result.filter(ticket => ticket.title.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
   // Refactor
