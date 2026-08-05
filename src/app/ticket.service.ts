@@ -14,10 +14,15 @@ export class TicketService {
     { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
   ];
 
-  constructor() { }
+  constructor() {}
 
   getTickets(): Observable<any[]> {
     return of(this.tickets);
+  }
+
+  getTicketByKey(key: string): Observable<any> {
+    const foundTicket = this.tickets.find(t => t.ticketKey === key);
+    return of(foundTicket); 
   }
 
   addTicket(ticket: any) {
