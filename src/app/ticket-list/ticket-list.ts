@@ -4,10 +4,11 @@ import { TicketCardComponent } from "../ticket-card/ticket-card";
 import { TicketService } from '../ticket.service';
 import { Subscription } from 'rxjs';
 import { TicketDashboard } from '../ticket-dashboard/ticket-dashboard';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-list',
-  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule, TicketDashboard],
+  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule, TicketDashboard, RouterLink],
   templateUrl: './ticket-list.html',
   styleUrl: './ticket-list.css',
 })
