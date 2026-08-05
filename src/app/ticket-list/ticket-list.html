@@ -44,7 +44,11 @@
 <br><br>
 
 @if (filteredTickets.length == 0) {
-    <p>Lista de tichete este vida!</p>
+    <p>Lista de tichete este vida pentru cautarea ta!</p>
+    
+    @if (currentStatusFilter !== null) {
+        <p><em>* Atentie: Ai un filtru de status activ. Pentru a cauta in toate tichetele, apasa pe "Arata Toate (Reset)".</em></p>
+    }
 }
 
 <!--Daca nu exista tichete, stie singur sa nu incerce bucla for-->
