@@ -5,17 +5,34 @@
 
 <h3>Adauga un nou ticket custom:</h3>
 
-<p>Titlu tichet nou:</p>
-<input type="text" [(ngModel)]="title">
+<form [formGroup]="ticketForm" (ngSubmit)="addTicket()">
+    
+    <p>Titlu tichet nou:</p>
+    <input type="text" formControlName="title">
+    
+    @if (ticketForm.get('title')?.invalid && ticketForm.get('title')?.touched) {
+        <p>Eroare: Titlu obligatoriu (max 100 caractere)</p>
+    }
 
-<p>Prioritatea:</p>
-<select [(ngModel)]="priority">
-    <option value="1">LOW</option>
-    <option value="2">MEDIUM</option>
-    <option value="3">HIGH</option>
-</select>
+    <p>Descriere:</p>
+    <input type="text" formControlName="description">
 
-<button (click)="addTicket()">Adauga</button>
+    @if (ticketForm.get('description')?.invalid && ticketForm.get('description')?.touched) {
+        <p>Eroare: Max 1000 caractere</p>
+    }
+
+    <p>Prioritatea:</p>
+    <select formControlName="priorityId">
+        <option value="1">LOW</option>
+        <option value="2">MEDIUM</option>
+        <option value="3">HIGH</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit" [disabled]="ticketForm.invalid">Adauga</button>
+
+</form>
 
 <br><br>
 
