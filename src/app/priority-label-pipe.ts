@@ -18,7 +18,7 @@ export class PriorityLabelPipe implements PipeTransform {
       case 3:
         label = 'High';
         break;
-      case 4:
+      default:
         label = 'Unknown';
     }
 
