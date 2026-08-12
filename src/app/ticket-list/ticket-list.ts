@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TicketCardComponent } from "../ticket-card/ticket-card";
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -9,7 +10,7 @@ import { TicketCardComponent } from "../ticket-card/ticket-card";
   styleUrl: './ticket-list.css',
 })
 export class TicketList {
-  tickets = [
+  tickets: ITicket[] = [
     { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
     { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
     { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
@@ -22,7 +23,7 @@ export class TicketList {
   title = '';
   priority = 1;
 
-  get filteredTickets() {
+  get filteredTickets(): ITicket[] {
     if (this.searchText == '') {
       return this.tickets;
     }
@@ -31,7 +32,7 @@ export class TicketList {
   }
 
   addTicket() {
-    const newTicket = {
+    const newTicket: ITicket = {
       id: this.tickets.length + 1,
       ticketKey: 'TK-' + (this.tickets.length + 201),
       title: this.title,
