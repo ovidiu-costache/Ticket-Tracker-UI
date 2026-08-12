@@ -7,5 +7,7 @@
 
 <!--Daca nu exista tichete, stie singur sa nu incerce bucla for-->
 @for (ticket of tickets; track ticket.id) {
-    <app-ticket-card></app-ticket-card>
+    <app-ticket-card
+        [ticket]="ticket">
+    </app-ticket-card>
 }
