@@ -4,6 +4,7 @@ import { TicketService } from '../ticket.service';
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { StatusLabelPipe } from '../status-label-pipe'; 
 import { PriorityLabelPipe } from '../priority-label-pipe';
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -12,7 +13,7 @@ import { PriorityLabelPipe } from '../priority-label-pipe';
   styleUrl: './ticket-detail.css',
 })
 export class TicketDetail implements OnInit {
-  ticket: any;
+  ticket?: ITicket;
   notFound = false;
 
   constructor(
