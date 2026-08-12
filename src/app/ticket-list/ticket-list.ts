@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { TicketCardComponent } from "../ticket-card/ticket-card";
 import { TicketService } from '../ticket.service';
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -10,7 +11,7 @@ import { TicketService } from '../ticket.service';
   styleUrl: './ticket-list.css',
 })
 export class TicketList implements OnInit {
-  tickets: any[] = [];
+  tickets: ITicket[] = [];
   searchText = ''; // Ramane ngModel pt search
   
   // Formularul FormGroup si campurile FormControl
@@ -40,7 +41,7 @@ export class TicketList implements OnInit {
     });
   }
 
-  get filteredTickets() {
+  get filteredTickets(): ITicket[] {
     if (this.searchText == '') {
       return this.tickets;
     }
@@ -53,14 +54,14 @@ export class TicketList implements OnInit {
       return; 
     }
 
-    const newTicket = {
+    const newTicket: ITicket = {
       id: this.tickets.length + 1,
       ticketKey: 'TK-' + (this.tickets.length + 201),
-      title: this.ticketForm.value.title,
-      description: '',
+      title: this.ticketForm.value.title ?? '',
+      description: this.ticketForm.value.description ?? '',
       createdAt: new Date(),
       statusId: 1,
-      priorityId: Number(this.ticketForm.value.priorityId)
+      priorityId: Number(this.ticketForm.value.priorityId ?? 1)
     };
 
     this.ticketService.addTicket(newTicket);
