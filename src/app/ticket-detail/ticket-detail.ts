@@ -5,6 +5,7 @@ import { DatePipe, TitleCasePipe } from '@angular/common';
 import { StatusLabelPipe } from '../status-label-pipe'; 
 import { PriorityLabelPipe } from '../priority-label-pipe';
 import { Subscription, map } from 'rxjs';
+import { IAuditEntry, ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -13,10 +14,10 @@ import { Subscription, map } from 'rxjs';
   styleUrl: './ticket-detail.css',
 })
 export class TicketDetail implements OnInit, OnDestroy {
-  ticket: any;
+  ticket?: ITicket;
   notFound = false;
 
-  auditHistory: any[] = [];
+  auditHistory: IAuditEntry[] = [];
   isLoadingAudit = signal<boolean>(true);
   auditSubscription!: Subscription;
 
