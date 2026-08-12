@@ -56,7 +56,7 @@
 @for (ticket of filteredTickets; track ticket.id) {
     <!--Ce este in stanga este din TicketCard, ce e in dreapta sunt datele curente din TicketList-->
     <app-ticket-card
-        [ticket]="ticket";
-        (deleteTicket)="removeTicketFromList($event)";>
+        [ticket]="ticket"
+        (deleteTicket)="removeTicketFromList($event)">
     </app-ticket-card>
 }
