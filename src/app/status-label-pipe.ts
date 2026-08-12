@@ -8,7 +8,7 @@ export class StatusLabelPipe implements PipeTransform {
   transform(value: number): string {
     switch (value) {
       case 1: 
-        return 'TO DO';
+        return 'TODO';
       case 2: 
         return 'IN PROGRESS';
       case 3: 
