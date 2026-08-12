@@ -22,10 +22,3 @@ export interface ITicketCounts {
   done: number;
   total: number;
 }
-
-export interface IAuditEntry {
-  date: Date;
-  oldStatus: number;
-  newStatus: number;
-  comment: string;
-}
