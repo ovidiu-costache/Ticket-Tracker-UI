@@ -76,17 +76,13 @@ export class TicketList implements OnInit {
       return; 
     }
 
-    const newTicket: ITicket = {
-      id: this.tickets.length + 1,
-      ticketKey: 'TK-' + (this.tickets.length + 201),
+    this.ticketService.addTicket({
       title: this.ticketForm.value.title ?? '',
       description: this.ticketForm.value.description ?? '',
       createdAt: new Date(),
       statusId: 1,
       priorityId: Number(this.ticketForm.value.priorityId ?? 1)
-    };
-
-    this.ticketService.addTicket(newTicket);
+    });
     this.loadTickets();
 
     // Resetare

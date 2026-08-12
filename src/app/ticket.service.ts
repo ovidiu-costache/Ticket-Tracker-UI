@@ -16,6 +16,9 @@ export class TicketService {
     { id: 6, ticketKey: 'TK-106', title: 'Export PDF', description: '?', createdAt: new Date(), statusId: 1, priorityId: 1 }
   ];
 
+  private nextId = this.tickets.length + 1;
+  private nextKeyNumber = this.tickets.length + 201;
+
   private auditHistoryByTicketKey: Record<string, IAuditEntry[]> = {
     'TK-101': [
       { date: new Date('2026-07-21T11:03:21'), oldStatus: 1, newStatus: 1, comment: 'Modificare titlu' },
@@ -66,8 +69,16 @@ export class TicketService {
     return of(foundTicket); 
   }
 
-  addTicket(ticket: ITicket) {
-    this.tickets.push(ticket);
+  addTicket(ticket: Omit<ITicket, 'id' | 'ticketKey'>) {
+    const createdTicket: ITicket = {
+      ...ticket,
+      id: this.nextId,
+      ticketKey: 'TK-' + this.nextKeyNumber
+    };
+
+    this.tickets.push(createdTicket);
+    this.nextId++;
+    this.nextKeyNumber++;
   }
 
   deleteTicket(id: number) {
