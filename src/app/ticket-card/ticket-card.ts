@@ -3,6 +3,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { StatusLabelPipe } from '../status-label-pipe';
 import { PriorityLabelPipe } from '../priority-label-pipe';
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-card',
@@ -11,7 +12,7 @@ import { PriorityLabelPipe } from '../priority-label-pipe';
   styleUrl: './ticket-card.css',
 })
 export class TicketCardComponent {
-  @Input() ticket: any;
+  @Input() ticket!: ITicket;
   @Output() deleteTicket = new EventEmitter<number>(); // ID numar
 
   removeTicket() {

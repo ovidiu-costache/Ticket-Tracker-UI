@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from '../ticket.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { ITicketCounts } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-dashboard',
@@ -10,7 +11,13 @@ import { Router } from '@angular/router';
   styleUrl: './ticket-dashboard.css',
 })
 export class TicketDashboard implements OnInit {
-  counts: any = {};
+  counts: ITicketCounts = {
+    todo: 0,
+    inProgress: 0,
+    inReview: 0,
+    done: 0,
+    total: 0
+  };
 
   // Ce filtru e selectat acum
   currentFilter: number | null = null;

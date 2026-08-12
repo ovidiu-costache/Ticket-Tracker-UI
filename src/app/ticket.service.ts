@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { IAuditEntry, ITicket, ITicketCounts } from './ticket.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
-  private tickets = [
+  private tickets: ITicket[] = [
     { id: 1, ticketKey: 'TK-101', title: 'Eroare de login', description: 'Nu ma pot loga', createdAt: new Date(), statusId: 1, priorityId: 3 },
     { id: 2, ticketKey: 'TK-1002', title: 'Buton stricat', description: 'Butonul de save nu merge', createdAt: new Date(), statusId: 1, priorityId: 2 },
     { id: 3, ticketKey: 'TK-103', title: 'Baza de date', description: 'Nu se incarca lista', createdAt: new Date(), statusId: 2, priorityId: 3 },
@@ -23,16 +24,16 @@ export class TicketService {
 
   constructor() {}
 
-  getTickets(): Observable<any[]> {
+  getTickets(): Observable<ITicket[]> {
     return of(this.tickets);
   }
 
-  getTicketByKey(key: string): Observable<any> {
+  getTicketByKey(key: string): Observable<ITicket | undefined> {
     const foundTicket = this.tickets.find(t => t.ticketKey === key);
     return of(foundTicket); 
   }
 
-  addTicket(ticket: any) {
+  addTicket(ticket: ITicket) {
     this.tickets.push(ticket);
   }
 
@@ -40,8 +41,8 @@ export class TicketService {
     this.tickets = this.tickets.filter(t => t.id !== id);
   }
 
-  getAuditForTicket(ticketKey: string): Observable<any[]> {
-    const mockAudit = [
+  getAuditForTicket(ticketKey: string): Observable<IAuditEntry[]> {
+    const mockAudit: IAuditEntry[] = [
       { date: new Date('2026-07-21T11:03:21'), oldStatus: 1, newStatus: 1, comment: 'Modificare titlu' },
       { date: new Date('2026-07-26T09:00:01'), oldStatus: 1, newStatus: 2, comment: 'Trecere in progres' },
       { date: new Date('2026-08-01T13:11:20'), oldStatus: 2, newStatus: 3, comment: 'Finalizat' }
@@ -55,8 +56,8 @@ export class TicketService {
   }
 
   // Cate tichete sunt in fiecare status
-  getTicketCount(): Observable<any> {
-    const counts = {
+  getTicketCount(): Observable<ITicketCounts> {
+    const counts: ITicketCounts = {
       todo: this.tickets.filter(t => t.statusId === 1).length,
       inProgress: this.tickets.filter(t => t.statusId === 2).length,
       inReview: this.tickets.filter(t => t.statusId === 3).length,
