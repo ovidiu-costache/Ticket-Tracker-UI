@@ -3,17 +3,17 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 import { TicketCardComponent } from "../ticket-card/ticket-card";
 import { TicketService } from '../ticket.service';
 import { Subscription } from 'rxjs';
-import { TicketDashboard } from '../ticket-dashboard/ticket-dashboard';
 import { RouterLink } from '@angular/router';
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-list',
-  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule, TicketDashboard, RouterLink],
+  imports: [TicketCardComponent, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './ticket-list.html',
   styleUrl: './ticket-list.css',
 })
 export class TicketList implements OnInit {
-  tickets: any[] = [];
+  tickets: ITicket[] = [];
   searchText = ''; // Ramane ngModel pt search
   
   // Formularul FormGroup si campurile FormControl
@@ -56,7 +56,7 @@ export class TicketList implements OnInit {
     });
   }
 
-  get filteredTickets() {
+  get filteredTickets(): ITicket[] {
     let result = this.tickets;
 
     if (this.currentStatusFilter !== null) {
@@ -76,17 +76,13 @@ export class TicketList implements OnInit {
       return; 
     }
 
-    const newTicket = {
-      id: this.tickets.length + 1,
-      ticketKey: 'TK-' + (this.tickets.length + 201),
-      title: this.ticketForm.value.title,
-      description: '',
+    this.ticketService.addTicket({
+      title: this.ticketForm.value.title ?? '',
+      description: this.ticketForm.value.description ?? '',
       createdAt: new Date(),
       statusId: 1,
-      priorityId: Number(this.ticketForm.value.priorityId)
-    };
-
-    this.ticketService.addTicket(newTicket);
+      priorityId: Number(this.ticketForm.value.priorityId ?? 1)
+    });
     this.loadTickets();
 
     // Resetare
