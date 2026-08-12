@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TicketCardComponent } from "../ticket-card/ticket-card";
 import { TicketService } from '../ticket.service';
+import { ITicket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket-list',
@@ -10,7 +11,7 @@ import { TicketService } from '../ticket.service';
   styleUrl: './ticket-list.css',
 })
 export class TicketList implements OnInit {
-  tickets: any[] = [];
+  tickets: ITicket[] = [];
   searchText = '';
   title = '';
   priority = 1;
@@ -35,7 +36,7 @@ export class TicketList implements OnInit {
   }
 
   addTicket() {
-    const newTicket = {
+    const newTicket: ITicket = {
       id: this.tickets.length + 1,
       ticketKey: 'TK-' + (this.tickets.length + 201),
       title: this.title,
